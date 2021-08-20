@@ -39,29 +39,26 @@ const MORSE_TABLE = {
 };
 
 let decode = (expr) => {
-        let result = ''
-        result += expr.replace(/.{10}/g, (part) => {
-            let morseCod = ''
-            morseCod += part.replace(/(00)|(10)|(11)/g, (match) => {
+    let result = ''
+    result += expr.replace(/.{10}/g, (part) => {
+        let morseCod = ''
+        morseCod += part.replace(/([01]{2})/g, (match) => {
+            switch (match) {
+                case "00":
+                    return ""
 
-                switch (match) {
-                    case "00":
-                        return ""
+                case "10":
+                    return '.'
 
-                    case "10":
-                        return '.'
-
-                    case '11':
-                        return '-'
-                }
-                //return " "
-            })
-            return MORSE_TABLE[morseCod]
+                case '11':
+                    return '-'
+            }
         })
-        return result
+        return MORSE_TABLE[morseCod]
+    })
+    return result
 
-    }
-    //console.log(decode("00101010100000000010001011101000101110100000111111**********00001011110000111111000010111000101110100000111010"))
+}
 module.exports = {
     decode
 }
